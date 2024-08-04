@@ -10,16 +10,25 @@ namespace TodoListClient.Controllers
     public class TodoListController : Controller
     {
         private ITodoListService _todoListService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TodoListController(ITodoListService todoListService)
+        public TodoListController(ITodoListService todoListService, IHttpContextAccessor httpContextAccessor)
         {
             _todoListService = todoListService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: TodoList
         [AuthorizeForScopes(ScopeKeySection = "TodoList:TodoListScope")]
         public async Task<ActionResult> Index()
         {
+            string errormsg = UserValidate.ValidateUser(_httpContextAccessor);
+
+            if (!string.IsNullOrEmpty(errormsg))            
+            {
+                ViewBag.ErrorMsg = errormsg;
+                RedirectToAction("Index", "Home");
+            }
             return View(await _todoListService.GetAsync());
         }
 
