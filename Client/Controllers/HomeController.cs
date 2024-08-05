@@ -13,17 +13,22 @@ namespace WebApp_OpenIDConnect_DotNet.Controllers
     {
         private readonly ITokenAcquisition tokenAcquisition;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        public UserValidate UserValidate { get; set; }
 
         public HomeController(ITokenAcquisition tokenAcquisition, IHttpContextAccessor httpContextAccessor)
         {
             this.tokenAcquisition = tokenAcquisition;
             this._httpContextAccessor = httpContextAccessor;
+            UserValidate = new UserValidate(_httpContextAccessor);
         }
 
         public IActionResult Index()
         {
             ViewBag.ErrorMsg=string.Empty;
-            string errormsg= UserValidate.ValidateUser(_httpContextAccessor);
+            string errormsg= UserValidate.ValidateUser();
+            ViewBag.Color = UserValidate.Color;
+            ViewBag.ClientCode=UserValidate.ClientCode;
+
             if (string.IsNullOrEmpty(errormsg))
             {
                 return View();

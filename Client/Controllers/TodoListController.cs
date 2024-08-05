@@ -12,10 +12,13 @@ namespace TodoListClient.Controllers
         private ITodoListService _todoListService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+public UserValidate UserValidate { get; set; }
+
         public TodoListController(ITodoListService todoListService, IHttpContextAccessor httpContextAccessor)
         {
             _todoListService = todoListService;
             _httpContextAccessor = httpContextAccessor;
+            UserValidate= new UserValidate(_httpContextAccessor);
         }
 
         // GET: TodoList
@@ -23,8 +26,9 @@ namespace TodoListClient.Controllers
         public async Task<ActionResult> Index()
         {
             ViewBag.ErrorMsg = string.Empty;
-            string errormsg = UserValidate.ValidateUser(_httpContextAccessor);
-            
+            string errormsg = UserValidate.ValidateUser();
+            ViewBag.Color = UserValidate.Color;
+            ViewBag.ClientCode = UserValidate.ClientCode;
 
             if (!string.IsNullOrEmpty(errormsg))            
             {

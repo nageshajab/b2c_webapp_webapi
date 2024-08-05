@@ -12,39 +12,43 @@ namespace TodoListClient
 {
     public class UserValidate
     {
-        public static string Color = "";
-        public static string ClientCode = "";
+        public string Color { get; set; }
+        public string ClientCode { get; set; }
+        IHttpContextAccessor _httpContextAccessor;
 
-        public static string ValidateUser(IHttpContextAccessor _httpContextAccessor)
+        public UserValidate(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public string ValidateUser()
         {
             //check user roles
             string userroles = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_userRoles");
-            string errormsg = "User does not belong to any role. Please try logout and login. If the problem still persist, please contact your Administrator";
+            string errormsg=string.Empty;
+
             if (userroles == null || string.IsNullOrWhiteSpace(userroles))
             {
-                return errormsg;
+                errormsg = "User does not belong to any role. Please try logout and login. If the problem still persist, please contact your Administrator";
             }
             string[] uroles = userroles.Split(',');
             if (!uroles.Contains("basic"))
             {
-                return errormsg;
+                errormsg = "User does not belong to 'basic' role. Please try logout and login. If the problem still persist, please contact your Administrator";
             }
 
             //check tax id
-            string taxId = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_TaxId");
-            errormsg = "User does not have tax id. Please contact your Administrator.";
+            string taxId = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_TaxId");           
             if (taxId == null || string.IsNullOrWhiteSpace(taxId))
             {
-                return errormsg;
+                errormsg = "User does not have tax id. Please contact your Administrator.";
             }
 
             //check tax id
              ClientCode= _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_ClientCode");
-            errormsg = "User does not have client code. Please contact your Administrator.";
-
             if (ClientCode == null || string.IsNullOrWhiteSpace(ClientCode))
             {
-                return errormsg;
+                errormsg = "User does not have client code. Please contact your Administrator."; 
             }
 
             switch (ClientCode)
