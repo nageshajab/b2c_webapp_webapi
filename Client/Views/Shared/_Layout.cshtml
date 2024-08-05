@@ -18,7 +18,7 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container @TodoListClient.UserValidate.Color">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -26,7 +26,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Learn Smart Coding</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+
+                    @{
+                        if (TodoListClient.UserValidate.ClientCode=="CareOregon")
+                        {
+                            <img loading="lazy" src="https://marvel-b1-cdn.bc0a.com/f00000000189145/www.careoregon.org/images/default-source/default-album/new-co-logo-lg.png?sfvrsn=843220e5_6" title="new-co-logo-lg" alt="careoregon logo" be_marvel="1" onerror="this.onerror=null;this.src='/images/default-source/default-album/new-co-logo-lg.png?sfvrsn=843220e5_6'" style="height: 20px;">
+                        }
+                        else if (TodoListClient.UserValidate.ClientCode == "Encora")
+                        {
+                            <img src="https://www.encora.com/hubfs/Website%20v2%20Assets/Homepage/Nav/Encora%20Nav.svg" alt="Encora" width="159" height="32">
+                        }
+                     }
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

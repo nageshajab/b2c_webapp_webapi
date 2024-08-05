@@ -21,7 +21,8 @@ namespace WebApp_OpenIDConnect_DotNet.Controllers
         }
 
         public IActionResult Index()
-        {   
+        {
+            ViewBag.ErrorMsg=string.Empty;
             string errormsg= UserValidate.ValidateUser(_httpContextAccessor);
             if (string.IsNullOrEmpty(errormsg))
             {

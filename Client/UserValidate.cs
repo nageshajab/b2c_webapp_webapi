@@ -12,6 +12,9 @@ namespace TodoListClient
 {
     public class UserValidate
     {
+        public static string Color = "";
+        public static string ClientCode = "";
+
         public static string ValidateUser(IHttpContextAccessor _httpContextAccessor)
         {
             //check user roles
@@ -35,6 +38,26 @@ namespace TodoListClient
                 return errormsg;
             }
 
+            //check tax id
+             ClientCode= _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_ClientCode");
+            errormsg = "User does not have client code. Please contact your Administrator.";
+
+            if (ClientCode == null || string.IsNullOrWhiteSpace(ClientCode))
+            {
+                return errormsg;
+            }
+
+            switch (ClientCode)
+            {
+                case "CareOregon":
+                    Color = "bg-success text-white";
+                    
+                    break;
+                case "Encora":
+                    Color = "bg-primary text-white";
+                    break;
+            }
+            
             return string.Empty;
         }
     }

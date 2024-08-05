@@ -22,12 +22,14 @@ namespace TodoListClient.Controllers
         [AuthorizeForScopes(ScopeKeySection = "TodoList:TodoListScope")]
         public async Task<ActionResult> Index()
         {
+            ViewBag.ErrorMsg = string.Empty;
             string errormsg = UserValidate.ValidateUser(_httpContextAccessor);
+            
 
             if (!string.IsNullOrEmpty(errormsg))            
             {
                 ViewBag.ErrorMsg = errormsg;
-                RedirectToAction("Index", "Home");
+                return View();
             }
             return View(await _todoListService.GetAsync());
         }
