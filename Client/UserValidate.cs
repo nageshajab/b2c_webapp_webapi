@@ -62,7 +62,7 @@ namespace TodoListClient
                     break;
             }
             
-            return string.Empty;
+            return errormsg;
         }
     }
 }
