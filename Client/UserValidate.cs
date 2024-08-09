@@ -25,43 +25,48 @@ namespace TodoListClient
         {
             //check user roles
             string userroles = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_userRoles");
-            string errormsg=string.Empty;
+            string errormsg = string.Empty;
 
             if (userroles == null || string.IsNullOrWhiteSpace(userroles))
             {
                 errormsg = "User does not belong to any role. Please try logout and login. If the problem still persist, please contact your Administrator";
             }
-            string[] uroles = userroles.Split(',');
-            if (!uroles.Contains("basic"))
+            else
             {
-                errormsg = "User does not belong to 'basic' role. Please try logout and login. If the problem still persist, please contact your Administrator";
+                string[] uroles = userroles.Split(',');
+                if (!uroles.Contains("basic"))
+                {
+                    errormsg = "User does not belong to 'basic' role. Please try logout and login. If the problem still persist, please contact your Administrator";
+                }
             }
 
+
             //check tax id
-            string taxId = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_TaxId");           
+            string taxId = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_TaxId");
             if (taxId == null || string.IsNullOrWhiteSpace(taxId))
             {
                 errormsg = "User does not have tax id. Please contact your Administrator.";
             }
 
             //check tax id
-             ClientCode= _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_ClientCode");
+            ClientCode = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_ClientCode");
             if (ClientCode == null || string.IsNullOrWhiteSpace(ClientCode))
             {
-                errormsg = "User does not have client code. Please contact your Administrator."; 
+                errormsg = "User does not have client code. Please contact your Administrator.";
             }
-
-            switch (ClientCode)
+            else
             {
-                case "CareOregon":
-                    Color = "bg-success text-white";
-                    
-                    break;
-                case "Encora":
-                    Color = "bg-primary text-white";
-                    break;
+                switch (ClientCode)
+                {
+                    case "CareOregon":
+                        Color = "bg-success text-white";
+
+                        break;
+                    case "Encora":
+                        Color = "bg-primary text-white";
+                        break;
+                }
             }
-            
             return errormsg;
         }
     }
