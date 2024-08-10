@@ -45,6 +45,7 @@ namespace WebApp_OpenIDConnect_DotNet
 
             // Add APIs
             services.AddTodoListService(Configuration);
+            services.AddUserService(Configuration);
 
             services.AddControllersWithViews(options =>
             {

@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web;
-using System.Diagnostics;
-using WebApp_OpenIDConnect_DotNet.Models;
-using Microsoft.Identity.Web;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
-using TodoListClient;
+
 namespace TodoListClient
 {
     public class UserValidate
@@ -34,7 +28,7 @@ namespace TodoListClient
             else
             {
                 string[] uroles = userroles.Split(',');
-                if (!uroles.Contains("basic"))
+                if (!uroles.Where(u => u.ToLower() == "basic").Any())
                 {
                     errormsg = "User does not belong to 'basic' role. Please try logout and login. If the problem still persist, please contact your Administrator";
                 }
@@ -68,6 +62,29 @@ namespace TodoListClient
                 }
             }
             return errormsg;
+        }
+
+        public bool IsAdminUser()
+        {
+            //check user roles
+            string userroles = _httpContextAccessor.HttpContext?.User.FindFirstValue("extension_userRoles");
+            string errormsg = string.Empty;
+
+            if (userroles == null || string.IsNullOrWhiteSpace(userroles))
+            {
+                errormsg = "User does not belong to any role. Please try logout and login. If the problem still persist, please contact your Administrator";       
+                return false;
+            }
+            else
+            {
+                string[] uroles = userroles.Split(',');
+                if (!uroles.Where(u=>u.ToLower().Trim()=="admin").Any())
+                {
+                    errormsg = "User does not belong to 'basic' role. Please try logout and login. If the problem still persist, please contact your Administrator";
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

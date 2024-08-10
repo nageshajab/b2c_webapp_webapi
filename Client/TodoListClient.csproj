@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\TodoListService\Models\TodoItem.cs" Link="Models\TodoItem.cs" />
+	  <Compile Include="..\TodoListService\Models\TodoItem.cs" Link="Models\TodoItem.cs" />
+	  <Compile Include="..\TodoListService\Models\User.cs" Link="Models\User.cs" />
   </ItemGroup>
 
   <ItemGroup>
