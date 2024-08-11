@@ -42,7 +42,8 @@ namespace TodoListService.Controllers
                     Surname = reader["Surname"].ToString(),
                     GivenName = reader["GivenName"].ToString(),
                     email = reader["email"].ToString(),
-                    TaxId = reader["TaxId"].ToString()
+                    TaxId = reader["TaxId"].ToString(),
+                    ObjectId = reader["objectId"].ToString()
                 });
             }
 
@@ -63,7 +64,7 @@ namespace TodoListService.Controllers
         {
             User user1 = new ();
             SqlCommand sqlCommand = GetConnection().CreateCommand();
-            sqlCommand.CommandText = $"select * from users where objectId={ObjectId}";
+            sqlCommand.CommandText = $"select * from users where objectId='{ObjectId}'";
 
             var reader = sqlCommand.ExecuteReader();
             while (reader.Read())
@@ -75,7 +76,8 @@ namespace TodoListService.Controllers
                     Surname = reader["Surname"].ToString(),
                     GivenName = reader["GivenName"].ToString(),
                     email = reader["email"].ToString(),
-                    TaxId = reader["TaxId"].ToString()
+                    TaxId = reader["TaxId"].ToString(),
+                    ObjectId = reader["objectId"].ToString()
                 };
             }
             return user1;

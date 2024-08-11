@@ -10,9 +10,9 @@ namespace TodoListClient.Services
     {
         Task<IEnumerable<User>> GetAsync();
 
-        Task<User> GetAsync(int id);
+        Task<User> GetAsync(string id);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(string id);
 
         Task<User> EditAsync(User todo);
     }

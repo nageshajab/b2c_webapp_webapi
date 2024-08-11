@@ -45,7 +45,7 @@ namespace TodoListClient.Services
             _userBaseAddress = configuration["TodoList:TodoListBaseAddress"];
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             await PrepareAuthenticatedClient();
 
@@ -103,11 +103,11 @@ namespace TodoListClient.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<User> GetAsync(int id)
+        public async Task<User> GetAsync(string id)
         {
             await PrepareAuthenticatedClient();
 
-            var response = await _httpClient.GetAsync($"{ _userBaseAddress}/api/userlist/{id}");
+            var response = await _httpClient.GetAsync($"{ _userBaseAddress}/api/user/{id}");
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var content = await response.Content.ReadAsStringAsync();

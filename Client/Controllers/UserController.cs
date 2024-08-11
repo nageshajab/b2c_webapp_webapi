@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using TodoListClient;
 using TodoListClient.Services;
 using System.Threading.Tasks;
+using TodoListService.Models;
 
 namespace WebApp_OpenIDConnect_DotNet.Controllers
 {
@@ -48,7 +49,27 @@ namespace WebApp_OpenIDConnect_DotNet.Controllers
             }
         }
 
-      
+        // GET: TodoList/Edit/5
+        public async Task<ActionResult> Edit(string id)
+        {
+            User user= await this._userService.GetAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        // POST: TodoList/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(string id, User user)
+        {
+            await _userService.EditAsync(user);
+            return RedirectToAction("Index");
+        }
 
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
