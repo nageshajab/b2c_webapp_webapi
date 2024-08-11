@@ -29,11 +29,11 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
 
                     @{
-                        if (ViewBag.ClientCode == "CareOregon")
+                        if (ViewBag.ClientCode?.ToLower() == "careoregon")
                         {
                             <img loading="lazy" src="https://marvel-b1-cdn.bc0a.com/f00000000189145/www.careoregon.org/images/default-source/default-album/new-co-logo-lg.png?sfvrsn=843220e5_6" title="new-co-logo-lg" alt="careoregon logo" be_marvel="1" onerror="this.onerror=null;this.src='/images/default-source/default-album/new-co-logo-lg.png?sfvrsn=843220e5_6'" style="height: 20px;">
                         }
-                        else if (ViewBag.ClientCode == "Encora")
+                        else if (ViewBag.ClientCode?.ToLower() == "encora")
                         {
                             <img src="https://www.encora.com/hubfs/Website%20v2%20Assets/Homepage/Nav/Encora%20Nav.svg" alt="Encora" width="159" height="32">
                         }
@@ -57,7 +57,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2023 -  Learn Smart Coding</p>
+            <p></p>
         </footer>
     </div>
 

@@ -62,7 +62,7 @@ namespace TodoListService.Controllers
         [HttpGet("{objectId}", Name = "GetUser")]
         public User Get(string ObjectId)
         {
-            User user1 = new ();
+            User user1 = new();
             SqlCommand sqlCommand = GetConnection().CreateCommand();
             sqlCommand.CommandText = $"select * from users where objectId='{ObjectId}'";
 
@@ -93,20 +93,24 @@ namespace TodoListService.Controllers
             int rows = sqlCommand.ExecuteNonQuery();
             return Ok(rows);
         }
-        
-        // PATCH api/values
-        [HttpPatch("{objectId}")]
-        public IActionResult Patch(int ObjectId, [FromBody] User user)
-        {
-            User user1 = new();
-            SqlCommand sqlCommand = GetConnection().CreateCommand();
-            sqlCommand.CommandText = $"update users " +
-                $" set clientcode={user.ClientCode}"+
-                $" set taxid={user.TaxId}" +
-            $" where objectId={ObjectId}";
 
-            int rows= sqlCommand.ExecuteNonQuery();
-            return Ok(rows);
+        // PATCH api/values
+        [HttpPatch]
+        public IActionResult Patch([FromBody] User user)
+        {
+            SqlCommand sqlCommand = GetConnection().CreateCommand();
+
+            string commandText = $"update users "
+                + $" set clientcode='{user.ClientCode}',"
+                + $"taxid='{user.TaxId}'" +
+                $" where objectId='{user.ObjectId}'";
+
+            sqlCommand.CommandText = commandText;
+
+            sqlCommand.ExecuteNonQuery();
+
+            var user1=Get(user.ObjectId);
+            return Ok(user1);
         }
     }
 }

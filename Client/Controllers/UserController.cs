@@ -19,7 +19,7 @@ namespace WebApp_OpenIDConnect_DotNet.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         public UserValidate UserValidate { get; set; }
 
-        public UserController(ITokenAcquisition tokenAcquisition, IHttpContextAccessor httpContextAccessor,IUserService userService)
+        public UserController(ITokenAcquisition tokenAcquisition, IHttpContextAccessor httpContextAccessor, IUserService userService)
         {
             this.tokenAcquisition = tokenAcquisition;
             this._httpContextAccessor = httpContextAccessor;
@@ -33,18 +33,18 @@ namespace WebApp_OpenIDConnect_DotNet.Controllers
             if (!UserValidate.IsAdminUser())
                 errormsg = "You need atleast admin role.";
 
-            ViewBag.ErrorMsg=string.Empty;
+            ViewBag.ErrorMsg = string.Empty;
             ViewBag.Color = UserValidate.Color;
-            ViewBag.ClientCode=UserValidate.ClientCode;
+            ViewBag.ClientCode = UserValidate.ClientCode;
 
             if (string.IsNullOrEmpty(errormsg))
             {
-                var lst=await _userService.GetAsync();
+                var lst = await _userService.GetAsync();
                 return View(lst);
             }
             else
             {
-                ViewBag.ErrorMsg=errormsg;
+                ViewBag.ErrorMsg = errormsg;
                 return View();
             }
         }
@@ -52,7 +52,7 @@ namespace WebApp_OpenIDConnect_DotNet.Controllers
         // GET: TodoList/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            User user= await this._userService.GetAsync(id);
+            User user = await this._userService.GetAsync(id);
 
             if (user == null)
             {
@@ -67,6 +67,8 @@ namespace WebApp_OpenIDConnect_DotNet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(string id, User user)
         {
+            user.ClientCode = user.ClientCode == "Select" ? "" : user.ClientCode;
+
             await _userService.EditAsync(user);
             return RedirectToAction("Index");
         }

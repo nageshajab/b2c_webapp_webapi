@@ -66,7 +66,7 @@ namespace TodoListClient.Services
             var jsonRequest = JsonConvert.SerializeObject(user);
             var jsoncontent = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
 
-            var response = await _httpClient.PatchAsync($"{ _userBaseAddress}/api/userlist/{user.ObjectId}", jsoncontent);
+            var response = await _httpClient.PatchAsync($"{ _userBaseAddress}/api/user", jsoncontent);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
