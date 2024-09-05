@@ -83,13 +83,14 @@ namespace WebApp_OpenIDConnect_DotNet
             app.UseCookiePolicy();
             
             app.UseRouting();
+      
+            app.UseAuthentication();
+       
+            app.UseAuthorization();
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto
             });
-            app.UseAuthentication();
-            app.UseAuthorization();
-            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
